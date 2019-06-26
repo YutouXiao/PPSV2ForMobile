@@ -7,67 +7,6 @@ namespace UnityEngine.Rendering.PPSMobile
     {
         internal static readonly int MainTex                         = Shader.PropertyToID("_MainTex");
 
-        internal static readonly int Jitter                          = Shader.PropertyToID("_Jitter");
-        internal static readonly int Sharpness                       = Shader.PropertyToID("_Sharpness");
-        internal static readonly int FinalBlendParameters            = Shader.PropertyToID("_FinalBlendParameters");
-        internal static readonly int HistoryTex                      = Shader.PropertyToID("_HistoryTex");
-
-        internal static readonly int SMAA_Flip                       = Shader.PropertyToID("_SMAA_Flip");
-        internal static readonly int SMAA_Flop                       = Shader.PropertyToID("_SMAA_Flop");
-        
-        internal static readonly int DepthCopy                       = Shader.PropertyToID("DepthCopy");
-        internal static readonly int LinearDepth                     = Shader.PropertyToID("LinearDepth");
-        internal static readonly int LowDepth1                       = Shader.PropertyToID("LowDepth1");
-        internal static readonly int LowDepth2                       = Shader.PropertyToID("LowDepth2");
-        internal static readonly int LowDepth3                       = Shader.PropertyToID("LowDepth3");
-        internal static readonly int LowDepth4                       = Shader.PropertyToID("LowDepth4");
-        internal static readonly int TiledDepth1                     = Shader.PropertyToID("TiledDepth1");
-        internal static readonly int TiledDepth2                     = Shader.PropertyToID("TiledDepth2");
-        internal static readonly int TiledDepth3                     = Shader.PropertyToID("TiledDepth3");
-        internal static readonly int TiledDepth4                     = Shader.PropertyToID("TiledDepth4");
-        internal static readonly int Occlusion1                      = Shader.PropertyToID("Occlusion1");
-        internal static readonly int Occlusion2                      = Shader.PropertyToID("Occlusion2");
-        internal static readonly int Occlusion3                      = Shader.PropertyToID("Occlusion3");
-        internal static readonly int Occlusion4                      = Shader.PropertyToID("Occlusion4");
-        internal static readonly int Combined1                       = Shader.PropertyToID("Combined1");
-        internal static readonly int Combined2                       = Shader.PropertyToID("Combined2");
-        internal static readonly int Combined3                       = Shader.PropertyToID("Combined3");
-
-        internal static readonly int SSRResolveTemp                  = Shader.PropertyToID("_SSRResolveTemp");
-        internal static readonly int Noise                           = Shader.PropertyToID("_Noise");
-        internal static readonly int Test                            = Shader.PropertyToID("_Test");
-        internal static readonly int Resolve                         = Shader.PropertyToID("_Resolve");
-        internal static readonly int History                         = Shader.PropertyToID("_History");
-        internal static readonly int ViewMatrix                      = Shader.PropertyToID("_ViewMatrix");
-        internal static readonly int InverseViewMatrix               = Shader.PropertyToID("_InverseViewMatrix");
-        internal static readonly int InverseProjectionMatrix         = Shader.PropertyToID("_InverseProjectionMatrix");
-        internal static readonly int ScreenSpaceProjectionMatrix     = Shader.PropertyToID("_ScreenSpaceProjectionMatrix");
-        internal static readonly int Params2                         = Shader.PropertyToID("_Params2");
-
-        internal static readonly int FogColor                        = Shader.PropertyToID("_FogColor");
-        internal static readonly int FogParams                       = Shader.PropertyToID("_FogParams");
-
-        internal static readonly int VelocityScale                   = Shader.PropertyToID("_VelocityScale");
-        internal static readonly int MaxBlurRadius                   = Shader.PropertyToID("_MaxBlurRadius");
-        internal static readonly int RcpMaxBlurRadius                = Shader.PropertyToID("_RcpMaxBlurRadius");
-        internal static readonly int VelocityTex                     = Shader.PropertyToID("_VelocityTex");
-        internal static readonly int Tile2RT                         = Shader.PropertyToID("_Tile2RT");
-        internal static readonly int Tile4RT                         = Shader.PropertyToID("_Tile4RT");
-        internal static readonly int Tile8RT                         = Shader.PropertyToID("_Tile8RT");
-        internal static readonly int TileMaxOffs                     = Shader.PropertyToID("_TileMaxOffs");
-        internal static readonly int TileMaxLoop                     = Shader.PropertyToID("_TileMaxLoop");
-        internal static readonly int TileVRT                         = Shader.PropertyToID("_TileVRT");
-        internal static readonly int NeighborMaxTex                  = Shader.PropertyToID("_NeighborMaxTex");
-        internal static readonly int LoopCount                       = Shader.PropertyToID("_LoopCount");
-
-        internal static readonly int Distance                        = Shader.PropertyToID("_Distance");
-        internal static readonly int LensCoeff                       = Shader.PropertyToID("_LensCoeff");
-        internal static readonly int MaxCoC                          = Shader.PropertyToID("_MaxCoC");
-        internal static readonly int RcpMaxCoC                       = Shader.PropertyToID("_RcpMaxCoC");
-        internal static readonly int RcpAspect                       = Shader.PropertyToID("_RcpAspect");
-        internal static readonly int CoCTex                          = Shader.PropertyToID("_CoCTex");
-        internal static readonly int TaaParams                       = Shader.PropertyToID("_TaaParams");
-
         internal static readonly int HistogramBuffer                 = Shader.PropertyToID("_HistogramBuffer");
         internal static readonly int Params                          = Shader.PropertyToID("_Params");
         internal static readonly int ScaleOffsetRes                  = Shader.PropertyToID("_ScaleOffsetRes");
@@ -81,7 +20,6 @@ namespace UnityEngine.Rendering.PPSMobile
         
         internal static readonly int Lut2D                           = Shader.PropertyToID("_Lut2D");
         internal static readonly int Lut3D                           = Shader.PropertyToID("_Lut3D");
-        internal static readonly int Lut3D_Params                    = Shader.PropertyToID("_Lut3D_Params");
         internal static readonly int Lut2D_Params                    = Shader.PropertyToID("_Lut2D_Params");
         internal static readonly int PostExposure                    = Shader.PropertyToID("_PostExposure");
         internal static readonly int ColorBalance                    = Shader.PropertyToID("_ColorBalance");
@@ -120,7 +58,5 @@ namespace UnityEngine.Rendering.PPSMobile
         internal static readonly int RenderViewportScaleFactor       = Shader.PropertyToID("_RenderViewportScaleFactor");
 
         internal static readonly int UVTransform                     = Shader.PropertyToID("_UVTransform");
-        internal static readonly int DepthSlice                      = Shader.PropertyToID("_DepthSlice");
-        internal static readonly int UVScaleOffset                   = Shader.PropertyToID("_UVScaleOffset");
     }
 }

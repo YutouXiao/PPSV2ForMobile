@@ -110,38 +110,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
             // Don't need to lerp boundary conditions
             if (t <= 0f) return from;
-            if (t >= 1f) return to;
-
-            bool is3D = from is Texture3D
-                    || (from is RenderTexture && ((RenderTexture)from).volumeDepth > 1);
-
-            RenderTexture rt;
-
-            // 3D texture blending is a special case and only works on compute enabled platforms
-            if (is3D)
-            {
-                int dpth = @from is Texture3D ? ((Texture3D) @from).depth : ((RenderTexture) @from).volumeDepth;
-                int size = Mathf.Max(from.width, from.height);
-                size = Mathf.Max(size, dpth);
-                
-                rt = Get(RenderTextureFormat.ARGBHalf, from.width, from.height, dpth, true, true);
-
-                var compute = m_Resources.computeShaders.texture3dLerp;
-                int kernel = compute.FindKernel("KTexture3DLerp");
-                m_Command.SetComputeVectorParam(compute, "_DimensionsAndLerp", new Vector4(from.width, from.height, dpth, t));
-                m_Command.SetComputeTextureParam(compute, kernel, "_Output", rt);
-                m_Command.SetComputeTextureParam(compute, kernel, "_From", from);
-                m_Command.SetComputeTextureParam(compute, kernel, "_To", to);
-
-                uint tgsX, tgsY, tgsZ;
-                compute.GetKernelThreadGroupSizes(kernel, out tgsX, out tgsY, out tgsZ);
-                Assert.AreEqual(tgsX, tgsY);
-                int groupSizeXY = Mathf.CeilToInt(size / (float)tgsX);
-                int groupSizeZ = Mathf.CeilToInt(size / (float)tgsZ);
-
-                m_Command.DispatchCompute(compute, kernel, groupSizeXY, groupSizeXY, groupSizeZ);
-                return rt;
-            }
+            if (t >= 1f) return to;       
 
             // 2D texture blending
             // We could handle textures with different sizes by picking the biggest one to avoid
@@ -151,7 +120,7 @@ namespace UnityEngine.Rendering.PPSMobile
             // it would waste a lot of texture memory as soon as you start using bigger textures
             // (snow ball effect).
             var format = TextureFormatUtilities.GetUncompressedRenderTextureFormat(to);
-            rt = Get(format, to.width, to.height);
+            RenderTexture rt = Get(format, to.width, to.height);
 
             var sheet = m_PropertySheets.Get(m_Resources.shaders.texture2dLerp);
             sheet.properties.SetTexture(ShaderIDs.To, to);
@@ -167,33 +136,7 @@ namespace UnityEngine.Rendering.PPSMobile
             Assert.IsNotNull(from);
 
             if (t < 0.00001)
-                return from;
-
-            bool is3D = from is Texture3D
-                    || (from is RenderTexture && ((RenderTexture)from).volumeDepth > 1);
-
-            RenderTexture rt;
-
-            // 3D texture blending is a special case and only works on compute enabled platforms
-            if (is3D)
-            {
-                int dpth = @from is Texture3D ? ((Texture3D) @from).depth : ((RenderTexture) @from).volumeDepth;
-                int size = Mathf.Max(from.width, from.height);
-                size = Mathf.Max(size, dpth);
-                
-                rt = Get(RenderTextureFormat.ARGBHalf, from.width, from.height, dpth, true, true);
-
-                var compute = m_Resources.computeShaders.texture3dLerp;
-                int kernel = compute.FindKernel("KTexture3DLerpToColor");
-                m_Command.SetComputeVectorParam(compute, "_DimensionsAndLerp", new Vector4(from.width, from.height, dpth, t));
-                m_Command.SetComputeVectorParam(compute, "_TargetColor", new Vector4(to.r, to.g, to.b, to.a));
-                m_Command.SetComputeTextureParam(compute, kernel, "_Output", rt);
-                m_Command.SetComputeTextureParam(compute, kernel, "_From", from);
-
-                int groupSize = Mathf.CeilToInt(size / 4f);
-                m_Command.DispatchCompute(compute, kernel, groupSize, groupSize, groupSize);
-                return rt;
-            }
+                return from;            
 
             // 2D texture blending
             // We could handle textures with different sizes by picking the biggest one to avoid
@@ -203,7 +146,7 @@ namespace UnityEngine.Rendering.PPSMobile
             // it would waste a lot of texture memory as soon as you start using bigger textures
             // (snow ball effect).
             var format = TextureFormatUtilities.GetUncompressedRenderTextureFormat(from);
-            rt = Get(format, from.width, from.height);
+            RenderTexture rt = Get(format, from.width, from.height);
 
             var sheet = m_PropertySheets.Get(m_Resources.shaders.texture2dLerp);
             sheet.properties.SetVector(ShaderIDs.TargetColor, new Vector4(to.r, to.g, to.b, to.a));

@@ -17,28 +17,6 @@ namespace UnityEditor.Rendering.PPSMobile
 
         static PostProcessEffectSettings s_ClipboardContent;
 
-        /// <summary>
-        /// Returns <c>true</c> if the current target is a mobile, <c>false</c> otherwise.
-        /// </summary>
-        public static bool isTargetingMobiles
-        {
-            get
-            {
-                var t = EditorUserBuildSettings.activeBuildTarget;
-                return t == BuildTarget.Android
-                    || t == BuildTarget.iOS
-                    || t == BuildTarget.tvOS
-#if !UNITY_2018_2_OR_NEWER
-                    || t == BuildTarget.Tizen
-#endif
-#if !UNITY_2018_3_OR_NEWER
-                    || t == BuildTarget.N3DS
-                    || t == BuildTarget.PSP2          
-#endif
-                    ;
-            }
-        }
-
         static EditorUtilities()
         {
             s_GUIContentCache = new Dictionary<string, GUIContent>();

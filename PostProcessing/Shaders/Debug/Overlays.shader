@@ -96,7 +96,7 @@ Shader "Hidden/PostProcessing/Debug/Overlays"
 
         float2 SampleMotionVectors(float2 coords)
         {
-            float2 mv = SAMPLE_TEXTURE2D(_CameraMotionVectorsTexture, sampler_CameraMotionVectorsTexture, UnityStereoTransformScreenSpaceTex(coords)).xy;
+            float2 mv = SAMPLE_TEXTURE2D(_CameraMotionVectorsTexture, sampler_CameraMotionVectorsTexture, coords).xy;
             mv.y *= -1.0;
             return mv;
         }

@@ -435,12 +435,7 @@ namespace UnityEngine.Rendering.PPSMobile
         /// <summary>
         /// A transparent texture.
         /// </summary>
-        Transparent,
-
-        /// <summary>
-        /// A 2D lookup table in strip format with <c>width = height * height</c>.
-        /// </summary>
-        Lut2D
+        Transparent
     }
 
     /// <summary>
@@ -473,14 +468,6 @@ namespace UnityEngine.Rendering.PPSMobile
 
             // One of them is null, blend to/from a default value is applicable
             {
-                if (defaultState == TextureParameterDefault.Lut2D)
-                {
-                    int size = from != null ? from.height : to.height;
-                    Texture defaultTexture = RuntimeUtilities.GetLutStrip(size);
-                    
-                    if (from == null) from = defaultTexture;
-                    if (to == null) to = defaultTexture;
-                }
 
                 Color tgtColor;
                                 
@@ -494,26 +481,7 @@ namespace UnityEngine.Rendering.PPSMobile
                         break;
                     case TextureParameterDefault.Transparent:
                         tgtColor = Color.clear;
-                        break;
-                    case TextureParameterDefault.Lut2D:
-                    {
-                        // Find the current lut size
-                        int size = from != null ? from.height : to.height;
-                        Texture defaultTexture = RuntimeUtilities.GetLutStrip(size);
-                        if (from == null) from = defaultTexture;
-                        if (to == null) to = defaultTexture;
-
-                        // Fail safe in case the lut size is incorrect
-                        if (from.width != to.width || from.height != to.height)
-                        {
-                            value = null;
-                            return;
-                        }
-
-                        value = TextureLerper.instance.Lerp(from, to, t);
-                        // All done, return
-                        return;
-                    }
+                        break;                    
                     default:
                         // defaultState is none, so just interpolate the base and return
                         base.Interp(from, to, t);

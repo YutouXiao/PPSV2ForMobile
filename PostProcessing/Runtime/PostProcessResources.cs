@@ -38,7 +38,6 @@ namespace UnityEngine.Rendering.PPSMobile
         public sealed class ComputeShaders
         {
             public ComputeShader exposureHistogram;
-            public ComputeShader texture3dLerp;
             public ComputeShader gammaHistogram;
             public ComputeShader waveform;
             public ComputeShader vectorscope;
@@ -50,28 +49,9 @@ namespace UnityEngine.Rendering.PPSMobile
             }
         }
 
-        [Serializable]
-        public sealed class SMAALuts
-        {
-            public Texture2D area;
-            public Texture2D search;
-        }
-
         public Texture2D[] blueNoise64;
         public Texture2D[] blueNoise256;
-        public SMAALuts smaaLuts;
         public Shaders shaders;
         public ComputeShaders computeShaders;
-
-#if UNITY_EDITOR
-        public delegate void ChangeHandler();
-        public ChangeHandler changeHandler;
-
-        void OnValidate()
-        {
-            if (changeHandler != null)
-                changeHandler();
-        }
-#endif
     }
 }

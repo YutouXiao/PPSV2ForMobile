@@ -6,7 +6,7 @@ namespace UnityEditor.Rendering.PPSMobile
     [InitializeOnLoad]
     sealed class DefineSetter
     {
-        const string k_Define = "UNITY_POST_PROCESSING_STACK_V2";
+        const string k_Define = "PPSV2Mobile";
         
         static DefineSetter()
         {

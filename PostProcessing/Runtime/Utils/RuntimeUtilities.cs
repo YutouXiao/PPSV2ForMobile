@@ -22,99 +22,7 @@ namespace UnityEngine.Rendering.PPSMobile
     /// </summary>
     public static class RuntimeUtilities
     {
-        #region Textures
-
-        static Texture2D m_WhiteTexture;
-
-        /// <summary>
-        /// A 1x1 white texture.
-        /// </summary>
-        /// <remarks>
-        /// This texture is only created once and recycled afterward. You shouldn't modify it.
-        /// </remarks>
-        public static Texture2D whiteTexture
-        {
-            get
-            {
-                if (m_WhiteTexture == null)
-                {
-                    m_WhiteTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false) { name = "White Texture" };
-                    m_WhiteTexture.SetPixel(0, 0, Color.white);
-                    m_WhiteTexture.Apply();
-                }
-
-                return m_WhiteTexture;
-            }
-        }
-
-        static Texture3D m_WhiteTexture3D;
-
-        /// <summary>
-        /// A 1x1x1 white texture.
-        /// </summary>
-        /// <remarks>
-        /// This texture is only created once and recycled afterward. You shouldn't modify it.
-        /// </remarks>
-        public static Texture3D whiteTexture3D
-        {
-            get
-            {
-                if (m_WhiteTexture3D == null)
-                {
-                    m_WhiteTexture3D = new Texture3D(1, 1, 1, TextureFormat.ARGB32, false) { name = "White Texture 3D" };
-                    m_WhiteTexture3D.SetPixels(new Color[] { Color.white });
-                    m_WhiteTexture3D.Apply();
-                }
-
-                return m_WhiteTexture3D;
-            }
-        }
-
-        static Texture2D m_BlackTexture;
-
-        /// <summary>
-        /// A 1x1 black texture.
-        /// </summary>
-        /// <remarks>
-        /// This texture is only created once and recycled afterward. You shouldn't modify it.
-        /// </remarks>
-        public static Texture2D blackTexture
-        {
-            get
-            {
-                if (m_BlackTexture == null)
-                {
-                    m_BlackTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false) { name = "Black Texture" };
-                    m_BlackTexture.SetPixel(0, 0, Color.black);
-                    m_BlackTexture.Apply();
-                }
-
-                return m_BlackTexture;
-            }
-        }
-
-        static Texture3D m_BlackTexture3D;
-
-        /// <summary>
-        /// A 1x1x1 black texture.
-        /// </summary>
-        /// <remarks>
-        /// This texture is only created once and recycled afterward. You shouldn't modify it.
-        /// </remarks>
-        public static Texture3D blackTexture3D
-        {
-            get
-            {
-                if (m_BlackTexture3D == null)
-                {
-                    m_BlackTexture3D = new Texture3D(1, 1, 1, TextureFormat.ARGB32, false) { name = "Black Texture 3D" };
-                    m_BlackTexture3D.SetPixels(new Color[] { Color.black });
-                    m_BlackTexture3D.Apply();
-                }
-
-                return m_BlackTexture3D;
-            }
-        }
+        #region Textures        
 
         static Texture2D m_TransparentTexture;
 
@@ -137,87 +45,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
                 return m_TransparentTexture;
             }
-        }
-
-        static Texture3D m_TransparentTexture3D;
-
-        /// <summary>
-        /// A 1x1x1 transparent texture.
-        /// </summary>
-        /// <remarks>
-        /// This texture is only created once and recycled afterward. You shouldn't modify it.
-        /// </remarks>
-        public static Texture3D transparentTexture3D
-        {
-            get
-            {
-                if (m_TransparentTexture3D == null)
-                {
-                    m_TransparentTexture3D = new Texture3D(1, 1, 1, TextureFormat.ARGB32, false) { name = "Transparent Texture 3D" };
-                    m_TransparentTexture3D.SetPixels(new Color[] { Color.clear });
-                    m_TransparentTexture3D.Apply();
-                }
-
-                return m_TransparentTexture3D;
-            }
-        }
-
-        static Dictionary<int, Texture2D> m_LutStrips = new Dictionary<int, Texture2D>();
-
-        /// <summary>
-        /// Gets a 2D lookup table for color grading use. Its size will be <c>width = height * height</c>.
-        /// </summary>
-        /// <param name="size">The height of the lookup table</param>
-        /// <returns>A 2D lookup table</returns>
-        /// <remarks>
-        /// Lookup tables are recycled and only created once per size. You shouldn't modify them.
-        /// </remarks>
-        public static Texture2D GetLutStrip(int size)
-        {
-            Texture2D texture;
-            if (!m_LutStrips.TryGetValue(size, out texture))
-            {
-                int width = size * size;
-                int height = size;
-                var pixels = new Color[width * height];
-                float inv = 1f / (size - 1f);
-
-                for (int z = 0; z < size; z++)
-                {
-                    var offset = z * size;
-                    var b = z * inv;
-
-                    for (int y = 0; y < size; y++)
-                    {
-                        var g = y * inv;
-
-                        for (int x = 0; x < size; x++)
-                        {
-                            var r = x * inv;
-                            pixels[y * width + offset + x] = new Color(r, g, b);
-                        }
-                    }
-                }
-
-                var format = TextureFormat.RGBAHalf;
-                if (!format.IsSupported())
-                    format = TextureFormat.ARGB32;
-
-                texture = new Texture2D(size * size, size, format, false, true)
-                {
-                    name = "Strip Lut" + size,
-                    hideFlags = HideFlags.DontSave,
-                    filterMode = FilterMode.Bilinear,
-                    wrapMode = TextureWrapMode.Clamp,
-                    anisoLevel = 0
-                };
-                texture.SetPixels(pixels);
-                texture.Apply();
-                m_LutStrips.Add(size, texture);
-            }
-
-            return texture;
-        }
+        }        
 
         #endregion
 
@@ -275,31 +103,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
                 return s_CopyStdMaterial;
             }
-        }
-
-        static Material s_CopyStdFromDoubleWideMaterial;
-
-        /// <summary>
-        /// A double-wide copy material to use with VR and the builtin pipelines.
-        /// </summary>
-        public static Material copyStdFromDoubleWideMaterial
-        {
-            get
-            {
-                if (s_CopyStdFromDoubleWideMaterial != null)
-                    return s_CopyStdFromDoubleWideMaterial;
-
-                Assert.IsNotNull(s_Resources);
-                var shader = s_Resources.shaders.copyStdFromDoubleWide;
-                s_CopyStdFromDoubleWideMaterial = new Material(shader)
-                {
-                    name = "PostProcess - CopyStdFromDoubleWide",
-                    hideFlags = HideFlags.HideAndDontSave
-                };
-
-                return s_CopyStdFromDoubleWideMaterial;
-            }
-        }
+        }        
 
         static Material s_CopyMaterial;
 
@@ -323,31 +127,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
                 return s_CopyMaterial;
             }
-        }
-
-        static Material s_CopyFromTexArrayMaterial;
-
-        /// <summary>
-        /// A copy material with a texture array slice as a source for the builtin pipelines.
-        /// </summary>
-        public static Material copyFromTexArrayMaterial
-        {
-            get
-            {
-                if (s_CopyFromTexArrayMaterial != null)
-                    return s_CopyFromTexArrayMaterial;
-
-                Assert.IsNotNull(s_Resources);
-                var shader = s_Resources.shaders.copyStdFromTexArray;
-                s_CopyFromTexArrayMaterial = new Material(shader)
-                {
-                    name = "PostProcess - CopyFromTexArray",
-                    hideFlags = HideFlags.HideAndDontSave
-                };
-
-                return s_CopyFromTexArrayMaterial;
-            }
-        }
+        }        
 
         static PropertySheet s_CopySheet;
 
@@ -365,37 +145,13 @@ namespace UnityEngine.Rendering.PPSMobile
             }
         }
 
-        static PropertySheet s_CopyFromTexArraySheet;
-
-        /// <summary>
-        /// A pre-configured <see cref="PropertySheet"/> for <see cref="copyFromTexArrayMaterial"/>.
-        /// </summary>
-        public static PropertySheet copyFromTexArraySheet
-        {
-            get
-            {
-                if (s_CopyFromTexArraySheet == null)
-                    s_CopyFromTexArraySheet = new PropertySheet(copyFromTexArrayMaterial);
-
-                return s_CopyFromTexArraySheet;
-            }
-        }
-
         internal static void UpdateResources(PostProcessResources resources)
         {
             Destroy(s_CopyMaterial);
             Destroy(s_CopyStdMaterial);
-            Destroy(s_CopyFromTexArrayMaterial);
-            Destroy(s_CopyStdFromDoubleWideMaterial);
-
             s_CopyMaterial = null;
             s_CopyStdMaterial = null;
-            s_CopyFromTexArrayMaterial = null;
-            s_CopyStdFromDoubleWideMaterial = null;
-
             s_CopySheet = null;
-            s_CopyFromTexArraySheet = null;
-
             s_Resources = resources;
         }
 
@@ -416,28 +172,7 @@ namespace UnityEngine.Rendering.PPSMobile
             #else
             cmd.SetRenderTarget(rt);
             #endif
-        }
-
-        /// <summary>
-        /// Sets the current render target and its depth using specified <see cref="RenderBufferLoadAction"/>.
-        /// </summary>
-        /// <param name="cmd">The command buffer to set the render target on</param>
-        /// <param name="color">The render target to set as color</param>
-        /// <param name="colorLoadAction">The load action for the color render target</param>
-        /// <param name="colorStoreAction">The store action for the color render target</param>
-        /// <param name="depth">The render target to set as depth</param>
-        /// <param name="depthLoadAction">The load action for the depth render target</param>
-        /// <param name="depthStoreAction">The store action for the depth render target</param>
-        public static void SetRenderTargetWithLoadStoreAction(this CommandBuffer cmd,
-            RenderTargetIdentifier color, RenderBufferLoadAction colorLoadAction, RenderBufferStoreAction colorStoreAction,
-            RenderTargetIdentifier depth, RenderBufferLoadAction depthLoadAction, RenderBufferStoreAction depthStoreAction)
-        {
-            #if UNITY_2018_2_OR_NEWER
-            cmd.SetRenderTarget(color, colorLoadAction, colorStoreAction, depth, depthLoadAction, depthStoreAction);
-            #else
-            cmd.SetRenderTarget(color, depth);
-            #endif
-        }
+        }        
 
         /// <summary>
         /// Does a copy of source to destination using a fullscreen triangle.
@@ -518,124 +253,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
             cmd.DrawMesh(fullscreenTriangle, Matrix4x4.identity, propertySheet.material, 0, pass, propertySheet.properties);
             #endif
-        }
-
-        /// <summary>
-        /// Blits a fullscreen triangle using a given material.
-        /// </summary>
-        /// <param name="cmd">The command buffer to use</param>
-        /// <param name="source">The source texture array</param>
-        /// <param name="destination">The destination render target</param>
-        /// <param name="propertySheet">The property sheet to use</param>
-        /// <param name="pass">The pass from the material to use</param>
-        /// <param name="clear">Should the destination target be cleared?</param>
-        /// <param name="depthSlice">The slice to use for the texture array</param>
-        public static void BlitFullscreenTriangleFromTexArray(this CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier destination, PropertySheet propertySheet, int pass, bool clear = false, int depthSlice = -1)
-        {
-            cmd.SetGlobalTexture(ShaderIDs.MainTex, source);
-            cmd.SetGlobalFloat(ShaderIDs.DepthSlice, depthSlice);
-            cmd.SetRenderTargetWithLoadStoreAction(destination, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store);
-
-            if (clear)
-                cmd.ClearRenderTarget(true, true, Color.clear);
-
-            cmd.DrawMesh(fullscreenTriangle, Matrix4x4.identity, propertySheet.material, 0, pass, propertySheet.properties);
-        }
-
-        /// <summary>
-        /// Blits a fullscreen triangle using a given material.
-        /// </summary>
-        /// <param name="cmd">The command buffer to use</param>
-        /// <param name="source">The source render target</param>
-        /// <param name="destination">The destination render target</param>
-        /// <param name="depth">The depth render target</param>
-        /// <param name="propertySheet">The property sheet to use</param>
-        /// <param name="pass">The pass from the material to use</param>
-        /// <param name="clear">Should the destination target be cleared?</param>
-        /// <param name="depthSlice">The array slice to consider as a source</param>
-        public static void BlitFullscreenTriangleToTexArray(this CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier destination, PropertySheet propertySheet, int pass, bool clear = false, int depthSlice = -1)
-        {
-            cmd.SetGlobalTexture(ShaderIDs.MainTex, source);
-            cmd.SetGlobalFloat(ShaderIDs.DepthSlice, depthSlice);
-            cmd.SetRenderTarget(destination, 0, CubemapFace.Unknown, -1);
-
-            if (clear)
-                cmd.ClearRenderTarget(true, true, Color.clear);
-
-            cmd.DrawMesh(fullscreenTriangle, Matrix4x4.identity, propertySheet.material, 0, pass, propertySheet.properties);
-        }
-
-        /// <summary>
-        /// Blits a fullscreen triangle using a given material.
-        /// </summary>
-        /// <param name="cmd">The command buffer to use</param>
-        /// <param name="source">The source render target</param>
-        /// <param name="destination">The destination render target</param>
-        /// <param name="depth">The depth render target</param>
-        /// <param name="propertySheet">The property sheet to use</param>
-        /// <param name="pass">The pass from the material to use</param>
-        /// <param name="clear">Should the destination target be cleared?</param>
-        /// <param name="viewport">An optional viewport to consider for the blit</param>
-        public static void BlitFullscreenTriangle(this CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier destination, RenderTargetIdentifier depth, PropertySheet propertySheet, int pass, bool clear = false, Rect? viewport = null)
-        {
-            cmd.SetGlobalTexture(ShaderIDs.MainTex, source);
-
-            LoadAction loadAction = viewport == null ? LoadAction.DontCare : LoadAction.Load;
-            if (clear)
-            {
-                cmd.SetRenderTargetWithLoadStoreAction(destination, loadAction, StoreAction.Store, depth, loadAction, StoreAction.Store);
-                cmd.ClearRenderTarget(true, true, Color.clear);
-            }
-            else
-            {
-                cmd.SetRenderTargetWithLoadStoreAction(destination, loadAction, StoreAction.Store, depth, LoadAction.Load, StoreAction.Store);
-            }
-
-            if (viewport != null)
-                cmd.SetViewport(viewport.Value);
-
-            cmd.DrawMesh(fullscreenTriangle, Matrix4x4.identity, propertySheet.material, 0, pass, propertySheet.properties);
-        }
-
-        /// <summary>
-        /// Blits a fullscreen triangle using a given material.
-        /// </summary>
-        /// <param name="cmd">The command buffer to use</param>
-        /// <param name="source">The source render target</param>
-        /// <param name="destinations">An array of destinations render targets</param>
-        /// <param name="depth">The depth render target</param>
-        /// <param name="propertySheet">The property sheet to use</param>
-        /// <param name="pass">The pass from the material to use</param>
-        /// <param name="clear">Should the destination target be cleared?</param>
-        /// <param name="viewport">An optional viewport to consider for the blit</param>
-        public static void BlitFullscreenTriangle(this CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier[] destinations, RenderTargetIdentifier depth, PropertySheet propertySheet, int pass, bool clear = false, Rect? viewport = null)
-        {
-            cmd.SetGlobalTexture(ShaderIDs.MainTex, source);
-            cmd.SetRenderTarget(destinations, depth);
-
-            if (viewport != null)
-                cmd.SetViewport(viewport.Value);
-
-            if (clear)
-                cmd.ClearRenderTarget(true, true, Color.clear);
-
-            cmd.DrawMesh(fullscreenTriangle, Matrix4x4.identity, propertySheet.material, 0, pass, propertySheet.properties);
-        }
-
-        /// <summary>
-        /// Does a copy of source to destination using the builtin blit command.
-        /// </summary>
-        /// <param name="cmd">The command buffer to use</param>
-        /// <param name="source">The source render target</param>
-        /// <param name="destination">The destination render target</param>
-        public static void BuiltinBlit(this CommandBuffer cmd, Rendering.RenderTargetIdentifier source, RenderTargetIdentifier destination)
-        {
-            #if UNITY_2018_2_OR_NEWER
-            cmd.SetRenderTarget(destination, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store);
-            destination = BuiltinRenderTextureType.CurrentActive;
-            #endif
-            cmd.Blit(source, destination);
-        }
+        }        
 
         /// <summary>
         /// Blits a fullscreen quad using the builtin blit command and a given material.
@@ -652,34 +270,7 @@ namespace UnityEngine.Rendering.PPSMobile
             destination = BuiltinRenderTextureType.CurrentActive;
             #endif
             cmd.Blit(source, destination, mat, pass);
-        }
-
-        // Fast basic copy texture if available, falls back to blit copy if not
-        // Assumes that both textures have the exact same type and format
-        /// <summary>
-        /// Copies the content of a texture into the other. Both textures must have the same size
-        /// and format or this method will fail.
-        /// </summary>
-        /// <param name="cmd">The command buffer to use</param>
-        /// <param name="source">The source render target</param>
-        /// <param name="destination">The destination render target</param>
-        /// <remarks>
-        /// If the CopyTexture command isn't supported on the target platform it will revert to a
-        /// fullscreen blit command instead.
-        /// </remarks>
-        public static void CopyTexture(CommandBuffer cmd, RenderTargetIdentifier source, RenderTargetIdentifier destination)
-        {
-            if (SystemInfo.copyTextureSupport > CopyTextureSupport.None)
-            {
-                cmd.CopyTexture(source, destination);
-                return;
-            }
-
-            cmd.BlitFullscreenTriangle(source, destination);
-        }
-
-        // TODO: Generalize the GetTemporaryRT and Blit commands in order to support
-        // RT Arrays for Stereo Instancing/MultiView
+        }        
 
         #endregion
 
@@ -692,75 +283,6 @@ namespace UnityEngine.Rendering.PPSMobile
         public static bool scriptableRenderPipelineActive
         {
             get { return GraphicsSettings.renderPipelineAsset != null; } // 5.6+ only
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if deferred shading is supported on the target platform,
-        /// <c>false</c> otherwise.
-        /// </summary>
-        public static bool supportsDeferredShading
-        {
-            get { return scriptableRenderPipelineActive || GraphicsSettings.GetShaderMode(BuiltinShaderType.DeferredShading) != BuiltinShaderMode.Disabled; }
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if <see cref="DepthTextureMode.DepthNormals"/> is supported on the
-        /// target platform, <c>false</c> otherwise.
-        /// </summary>
-        public static bool supportsDepthNormals
-        {
-            get { return scriptableRenderPipelineActive || GraphicsSettings.GetShaderMode(BuiltinShaderType.DepthNormals) != BuiltinShaderMode.Disabled; }
-        }
-
-#if UNITY_EDITOR
-        /// <summary>
-        /// Returns <c>true</c> if single-pass stereo rendering is selected, <c>false</c> otherwise.
-        /// </summary>
-        /// <remarks>
-        /// This property only works in the editor.
-        /// </remarks>
-        public static bool isSinglePassStereoSelected
-        {
-            get
-            {
-                return PlayerSettings.virtualRealitySupported
-                    && PlayerSettings.stereoRenderingPath == UnityEditor.StereoRenderingPath.SinglePass;
-            }
-        }
-#endif
-
-        /// <summary>
-        /// Returns <c>true</c> if single-pass stereo rendering is active, <c>false</c> otherwise.
-        /// </summary>
-        /// <remarks>
-        /// This property only works in the editor.
-        /// </remarks>
-        // TODO: Check for SPSR support at runtime
-        public static bool isSinglePassStereoEnabled
-        {
-            get
-            {
-#if UNITY_EDITOR
-                return isSinglePassStereoSelected && Application.isPlaying;
-#else
-                return false;
-#endif
-            }
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if VR is enabled, <c>false</c> otherwise.
-        /// </summary>
-        public static bool isVREnabled
-        {
-            get
-            {
-#if UNITY_EDITOR
-                return UnityEditor.PlayerSettings.virtualRealitySupported;
-#else
-                return false;
-#endif
-            }
         }
 
         /// <summary>
@@ -835,20 +357,6 @@ namespace UnityEngine.Rendering.PPSMobile
         }
 
         /// <summary>
-        /// Checks if resolved depth is available on the current target platform.
-        /// </summary>
-        /// <param name="camera">A rendering camera</param>
-        /// <returns><c>true</c> if resolved depth is available, <c>false</c> otherwise</returns>
-        public static bool IsResolvedDepthAvailable(Camera camera)
-        {
-            // AFAIK resolved depth is only available on D3D11/12 via BuiltinRenderTextureType.ResolvedDepth
-            // TODO: Is there more proper way to determine this? What about SRPs?
-            var gtype = SystemInfo.graphicsDeviceType;
-            return camera.actualRenderingPath == RenderingPath.DeferredShading &&
-                (gtype == GraphicsDeviceType.Direct3D11 || gtype == GraphicsDeviceType.Direct3D12);
-        }
-
-        /// <summary>
         /// Properly destroys a given profile.
         /// </summary>
         /// <param name="profile">The profile to destroy</param>
@@ -880,18 +388,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
             if (destroyGameObject)
                 Destroy(gameObject);
-        }
-
-        /// <summary>
-        /// Checks if a post-processing layer is active.
-        /// </summary>
-        /// <param name="layer">The layer to check; can be <c>null</c></param>
-        /// <returns><c>true</c> if the layer is enabled, <c>false</c> otherwise</returns>
-        public static bool IsPostProcessingActive(PostProcessLayer layer)
-        {
-            return layer != null
-                && layer.enabled;
-        }
+        }        
 
         /// <summary>
         /// Gets all scene objects in the hierarchy, including inactive objects. This method is slow
