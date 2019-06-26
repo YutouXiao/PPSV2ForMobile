@@ -14,13 +14,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
         internal static readonly int SMAA_Flip                       = Shader.PropertyToID("_SMAA_Flip");
         internal static readonly int SMAA_Flop                       = Shader.PropertyToID("_SMAA_Flop");
-
-        internal static readonly int AOParams                        = Shader.PropertyToID("_AOParams");
-        internal static readonly int AOColor                         = Shader.PropertyToID("_AOColor");
-        internal static readonly int OcclusionTexture1               = Shader.PropertyToID("_OcclusionTexture1");
-        internal static readonly int OcclusionTexture2               = Shader.PropertyToID("_OcclusionTexture2");
-        internal static readonly int SAOcclusionTexture              = Shader.PropertyToID("_SAOcclusionTexture");
-        internal static readonly int MSVOcclusionTexture             = Shader.PropertyToID("_MSVOcclusionTexture");
+        
         internal static readonly int DepthCopy                       = Shader.PropertyToID("DepthCopy");
         internal static readonly int LinearDepth                     = Shader.PropertyToID("LinearDepth");
         internal static readonly int LowDepth1                       = Shader.PropertyToID("LowDepth1");
@@ -66,8 +60,6 @@ namespace UnityEngine.Rendering.PPSMobile
         internal static readonly int NeighborMaxTex                  = Shader.PropertyToID("_NeighborMaxTex");
         internal static readonly int LoopCount                       = Shader.PropertyToID("_LoopCount");
 
-        internal static readonly int DepthOfFieldTemp                = Shader.PropertyToID("_DepthOfFieldTemp");
-        internal static readonly int DepthOfFieldTex                 = Shader.PropertyToID("_DepthOfFieldTex");
         internal static readonly int Distance                        = Shader.PropertyToID("_Distance");
         internal static readonly int LensCoeff                       = Shader.PropertyToID("_LensCoeff");
         internal static readonly int MaxCoC                          = Shader.PropertyToID("_MaxCoC");
@@ -76,7 +68,6 @@ namespace UnityEngine.Rendering.PPSMobile
         internal static readonly int CoCTex                          = Shader.PropertyToID("_CoCTex");
         internal static readonly int TaaParams                       = Shader.PropertyToID("_TaaParams");
 
-        internal static readonly int AutoExposureTex                 = Shader.PropertyToID("_AutoExposureTex");
         internal static readonly int HistogramBuffer                 = Shader.PropertyToID("_HistogramBuffer");
         internal static readonly int Params                          = Shader.PropertyToID("_Params");
         internal static readonly int ScaleOffsetRes                  = Shader.PropertyToID("_ScaleOffsetRes");
@@ -87,12 +78,7 @@ namespace UnityEngine.Rendering.PPSMobile
         internal static readonly int ColorIntensity                  = Shader.PropertyToID("_ColorIntensity");
         internal static readonly int Bloom_Settings                  = Shader.PropertyToID("_Bloom_Settings");
         internal static readonly int Bloom_Color                     = Shader.PropertyToID("_Bloom_Color");
-        internal static readonly int ChromaticAberration_Amount      = Shader.PropertyToID("_ChromaticAberration_Amount");
-        internal static readonly int ChromaticAberration_SpectralLut = Shader.PropertyToID("_ChromaticAberration_SpectralLut");
-
-        internal static readonly int Distortion_CenterScale          = Shader.PropertyToID("_Distortion_CenterScale");
-        internal static readonly int Distortion_Amount               = Shader.PropertyToID("_Distortion_Amount");
-
+        
         internal static readonly int Lut2D                           = Shader.PropertyToID("_Lut2D");
         internal static readonly int Lut3D                           = Shader.PropertyToID("_Lut3D");
         internal static readonly int Lut3D_Params                    = Shader.PropertyToID("_Lut3D_Params");
@@ -115,19 +101,6 @@ namespace UnityEngine.Rendering.PPSMobile
         internal static readonly int MidSegmentB                     = Shader.PropertyToID("_MidSegmentB");
         internal static readonly int ShoSegmentA                     = Shader.PropertyToID("_ShoSegmentA");
         internal static readonly int ShoSegmentB                     = Shader.PropertyToID("_ShoSegmentB");
-
-        internal static readonly int Vignette_Color                  = Shader.PropertyToID("_Vignette_Color");
-        internal static readonly int Vignette_Center                 = Shader.PropertyToID("_Vignette_Center");
-        internal static readonly int Vignette_Settings               = Shader.PropertyToID("_Vignette_Settings");
-        internal static readonly int Vignette_Mask                   = Shader.PropertyToID("_Vignette_Mask");
-        internal static readonly int Vignette_Opacity                = Shader.PropertyToID("_Vignette_Opacity");
-        internal static readonly int Vignette_Mode                   = Shader.PropertyToID("_Vignette_Mode");
-
-        internal static readonly int Grain_Params1                   = Shader.PropertyToID("_Grain_Params1");
-        internal static readonly int Grain_Params2                   = Shader.PropertyToID("_Grain_Params2");
-        internal static readonly int GrainTex                        = Shader.PropertyToID("_GrainTex");
-        internal static readonly int Phase                           = Shader.PropertyToID("_Phase");
-        internal static readonly int GrainNoiseParameters            = Shader.PropertyToID("_NoiseParameters");
 
         internal static readonly int LumaInAlpha                     = Shader.PropertyToID("_LumaInAlpha");
 

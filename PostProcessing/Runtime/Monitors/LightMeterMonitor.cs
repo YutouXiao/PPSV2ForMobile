@@ -53,27 +53,6 @@ namespace UnityEngine.Rendering.PPSMobile
                 sheet.properties.SetTexture(ShaderIDs.Lut3D, context.logLut);
             }
 
-            var autoExpo = context.autoExposure;
-            if (autoExpo != null)
-            {
-                // Make sure filtering values are correct to avoid apocalyptic consequences
-                float lowPercent = autoExpo.filtering.value.x;
-                float highPercent = autoExpo.filtering.value.y;
-                const float kMinDelta = 1e-2f;
-                highPercent = Mathf.Clamp(highPercent, 1f + kMinDelta, 99f);
-                lowPercent = Mathf.Clamp(lowPercent, 1f, highPercent - kMinDelta);
-
-                var parameters = new Vector4(
-                    lowPercent * 0.01f,
-                    highPercent * 0.01f,
-                    RuntimeUtilities.Exp2(autoExpo.minLuminance.value),
-                    RuntimeUtilities.Exp2(autoExpo.maxLuminance.value)
-                );
-
-                sheet.EnableKeyword("AUTO_EXPOSURE");
-                sheet.properties.SetVector(ShaderIDs.Params, parameters);
-            }
-
             var cmd = context.command;
             cmd.BeginSample("LightMeter");
             cmd.BlitFullscreenTriangle(BuiltinRenderTextureType.None, output, sheet, 0);

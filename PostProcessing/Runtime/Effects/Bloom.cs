@@ -119,10 +119,6 @@ namespace UnityEngine.Rendering.PPSMobile
 
             var sheet = context.propertySheets.Get(context.resources.shaders.bloom);
 
-            // Apply auto exposure adjustment in the prefiltering pass
-            // 前置过滤,应用自动曝光 
-            sheet.properties.SetTexture(ShaderIDs.AutoExposureTex, context.autoExposureTexture);
-
             // Negative anamorphic ratio values distort vertically - positive is horizontal
             // 变形比值为负:垂直扭曲;正:水平扭曲
             float ratio = Mathf.Clamp(settings.anamorphicRatio, -1, 1);

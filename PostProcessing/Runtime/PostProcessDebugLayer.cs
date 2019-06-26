@@ -42,11 +42,6 @@ namespace UnityEngine.Rendering.PPSMobile
         _,
 
         /// <summary>
-        /// Displays the raw ambient occlusion map.
-        /// </summary>
-        AmbientOcclusion,
-
-        /// <summary>
         /// Displays the bloom buffer.
         /// </summary>
         BloomBuffer,
@@ -54,12 +49,7 @@ namespace UnityEngine.Rendering.PPSMobile
         /// <summary>
         /// Displays the thresholded buffer used to generate bloom.
         /// </summary>
-        BloomThreshold,
-
-        /// <summary>
-        /// Displays depth of field helpers.
-        /// </summary>
-        DepthOfField
+        BloomThreshold
     }
 
     /// <summary>

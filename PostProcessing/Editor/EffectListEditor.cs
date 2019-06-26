@@ -100,7 +100,7 @@ namespace UnityEditor.Rendering.PPSMobile
             Type editorType;
 
             if (!m_EditorTypes.TryGetValue(settingsType, out editorType))
-                editorType = typeof(DefaultPostProcessEffectEditor);
+                return;
 
             var editor = (PostProcessEffectBaseEditor)Activator.CreateInstance(editorType);
             editor.Init(settings, m_BaseEditor);

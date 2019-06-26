@@ -8,7 +8,6 @@ Shader "Hidden/PostProcessing/Bloom"
 
         TEXTURE2D_SAMPLER2D(_MainTex, sampler_MainTex);
         TEXTURE2D_SAMPLER2D(_BloomTex, sampler_BloomTex);
-        TEXTURE2D_SAMPLER2D(_AutoExposureTex, sampler_AutoExposureTex);
 
         float4 _MainTex_TexelSize;
         float  _SampleScale;
@@ -21,8 +20,6 @@ Shader "Hidden/PostProcessing/Bloom"
 
         half4 Prefilter(half4 color, float2 uv)
         {
-            half autoExposure = SAMPLE_TEXTURE2D(_AutoExposureTex, sampler_AutoExposureTex, uv).r;
-            color *= autoExposure;
             color = min(_Params.x, color); // clamp to max
             color = QuadraticThreshold(color, _Threshold.x, _Threshold.yzw);
             return color;

@@ -18,10 +18,7 @@ namespace UnityEngine.Rendering.PPSMobile
             public Shader copyStdFromTexArray;
             public Shader copyStdFromDoubleWide;
             public Shader discardAlpha;
-            public Shader depthOfField;
             public Shader finalPass;
-            public Shader grainBaker;
-            public Shader motionBlur;
             public Shader texture2dLerp;
             public Shader uber;
             public Shader lut2DBaker;
@@ -30,7 +27,6 @@ namespace UnityEngine.Rendering.PPSMobile
             public Shader waveform;
             public Shader vectorscope;
             public Shader debugOverlays;
-            public Shader scalableAO;
 
             public Shaders Clone()
             {
@@ -41,17 +37,11 @@ namespace UnityEngine.Rendering.PPSMobile
         [Serializable]
         public sealed class ComputeShaders
         {
-            public ComputeShader autoExposure;
             public ComputeShader exposureHistogram;
-            public ComputeShader lut3DBaker;
             public ComputeShader texture3dLerp;
             public ComputeShader gammaHistogram;
             public ComputeShader waveform;
             public ComputeShader vectorscope;
-            public ComputeShader multiScaleAODownsample1;
-            public ComputeShader multiScaleAODownsample2;
-            public ComputeShader multiScaleAORender;
-            public ComputeShader multiScaleAOUpsample;
             public ComputeShader gaussianDownsample;
 
             public ComputeShaders Clone()

@@ -436,18 +436,6 @@ namespace UnityEngine.Rendering.PPSMobile
             TextureLerper.instance.BeginFrame(context);
             UpdateVolumeSystem(context.camera, context.command);
 
-            // Lighting & opaque-only effects
-            var aoBundle = GetBundle<AmbientOcclusion>();
-            var aoSettings = aoBundle.CastSettings<AmbientOcclusion>();
-            var aoRenderer = aoBundle.CastRenderer<AmbientOcclusionRenderer>();
-
-            bool aoSupported = aoSettings.IsEnabledAndSupported(context);
-            if (aoSupported)
-            {
-                context.command = m_LegacyCmdBufferOpaque;
-                aoRenderer.Get().RenderAfterOpaque(context);
-            }
-
             bool hasCustomOpaqueOnlyEffects = HasOpaqueOnlyEffects(context);
             int opaqueOnlyEffects = hasCustomOpaqueOnlyEffects ? 1 : 0;
 
@@ -863,7 +851,6 @@ namespace UnityEngine.Rendering.PPSMobile
             uberSheet.ClearKeywords();
             uberSheet.properties.Clear();
             context.uberSheet = uberSheet;
-            context.autoExposureTexture = RuntimeUtilities.whiteTexture;
             context.bloomBufferNameID = -1;
 
             var cmd = context.command;
@@ -884,28 +871,13 @@ namespace UnityEngine.Rendering.PPSMobile
                     uberSheet.properties.SetFloat(ShaderIDs.LumaInAlpha, 1f);
             }
 
-            // Depth of field final combination pass used to be done in Uber which led to artifacts
-            // when used at the same time as Bloom (because both effects used the same source, so
-            // the stronger bloom was, the more DoF was eaten away in out of focus areas)
-            int depthOfFieldTarget = RenderEffect<DepthOfField>(context, true);
-
-            // Motion blur is a separate pass - could potentially be done after DoF depending on the
-            // kind of results you're looking for...
-            int motionBlurTarget = RenderEffect<MotionBlur>(context, true);
-
             // Prepare exposure histogram if needed
             if (ShouldGenerateLogHistogram(context))
                 m_LogHistogram.Generate(context);
 
             // Uber effects
-            RenderEffect<AutoExposure>(context);
-            uberSheet.properties.SetTexture(ShaderIDs.AutoExposureTex, context.autoExposureTexture);
 
-            RenderEffect<LensDistortion>(context);
-            RenderEffect<ChromaticAberration>(context);
             RenderEffect<Bloom>(context);
-            RenderEffect<Vignette>(context);
-            RenderEffect<Grain>(context);
 
             if (!breakBeforeColorGrading)
                 RenderEffect<ColorGrading>(context);
@@ -934,8 +906,6 @@ namespace UnityEngine.Rendering.PPSMobile
             context.destination = finalDestination;
 
             if (releaseTargetAfterUse > -1) cmd.ReleaseTemporaryRT(releaseTargetAfterUse);
-            if (motionBlurTarget > -1) cmd.ReleaseTemporaryRT(motionBlurTarget);
-            if (depthOfFieldTarget > -1) cmd.ReleaseTemporaryRT(depthOfFieldTarget);
             if (context.bloomBufferNameID > -1) cmd.ReleaseTemporaryRT(context.bloomBufferNameID);
 
             cmd.EndSample("BuiltinStack");
@@ -1019,9 +989,7 @@ namespace UnityEngine.Rendering.PPSMobile
 
         bool ShouldGenerateLogHistogram(PostProcessRenderContext context)
         {
-            bool autoExpo = GetBundle<AutoExposure>().settings.IsEnabledAndSupported(context);
-            bool lightMeter = debugLayer.lightMeter.IsRequestedAndSupported(context);
-            return autoExpo || lightMeter;
+            return debugLayer.lightMeter.IsRequestedAndSupported(context);
         }
     }
 }

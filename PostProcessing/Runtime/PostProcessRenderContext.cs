@@ -136,10 +136,8 @@ namespace UnityEngine.Rendering.PPSMobile
         // Internal values used for builtin effects
         // Beware, these may not have been set before a specific builtin effect has been executed
         internal PropertySheet uberSheet;
-        internal Texture autoExposureTexture;
         internal LogHistogram logHistogram;
         internal Texture logLut;
-        internal AutoExposure autoExposure;
         internal int bloomBufferNameID;
 #if UNITY_2018_2_OR_NEWER
         internal bool physicalCamera;
@@ -178,9 +176,7 @@ namespace UnityEngine.Rendering.PPSMobile
             antialiasing = PostProcessLayer.Antialiasing.None;
 
             uberSheet = null;
-            autoExposureTexture = null;
             logLut = null;
-            autoExposure = null;
             bloomBufferNameID = -1;
 
             if (userData == null)
