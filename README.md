@@ -2,6 +2,9 @@
 
 This branch is under active development and holds the current version of the post-processing stack. 
 
+本分支版本仅支持Bloom、ColorGrading 属于定制化组件
+------------
+
 Fork版本说明
 ------------
 
