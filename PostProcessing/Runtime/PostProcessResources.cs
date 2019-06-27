@@ -15,8 +15,6 @@ namespace UnityEngine.Rendering.PPSMobile
             public Shader bloom;
             public Shader copy;
             public Shader copyStd;
-            public Shader copyStdFromTexArray;
-            public Shader copyStdFromDoubleWide;
             public Shader discardAlpha;
             public Shader finalPass;
             public Shader texture2dLerp;
@@ -41,7 +39,6 @@ namespace UnityEngine.Rendering.PPSMobile
             public ComputeShader gammaHistogram;
             public ComputeShader waveform;
             public ComputeShader vectorscope;
-            public ComputeShader gaussianDownsample;
 
             public ComputeShaders Clone()
             {
@@ -50,7 +47,6 @@ namespace UnityEngine.Rendering.PPSMobile
         }
 
         public Texture2D[] blueNoise64;
-        public Texture2D[] blueNoise256;
         public Shaders shaders;
         public ComputeShaders computeShaders;
     }
